@@ -9,8 +9,11 @@ abstract final class ResponsiveLayout {
   static bool isTablet(BuildContext context) =>
       sizeOf(context).shortestSide >= 600;
 
-  static bool isLandscapeTablet(BuildContext context) =>
-      isLandscape(context) && isTablet(context);
+  static bool isLandscapeTablet(BuildContext context) {
+    final size = sizeOf(context);
+    if (size.shortestSide < 600) return false;
+    return size.width > size.height;
+  }
 
   static double contentMaxWidth(BuildContext context) {
     if (isLandscapeTablet(context)) return 1200;

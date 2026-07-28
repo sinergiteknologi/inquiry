@@ -56,7 +56,6 @@ class ProductResultCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: horizontal * 0.4),
         child: Container(
           width: double.infinity,
-          height: double.infinity,
           padding: const EdgeInsets.all(32),
           decoration: BoxDecoration(
             color: AppColors.white,

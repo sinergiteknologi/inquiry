@@ -163,13 +163,10 @@ class _LandscapeBody extends StatelessWidget {
                       if (hasProduct)
                         Expanded(
                           flex: hasMessage ? 2 : 1,
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: ProductResultCard(
-                              product: provider.products.first,
-                              formattedCode: provider.formattedCode,
-                              landscape: true,
-                            ),
+                          child: ProductResultCard(
+                            product: provider.products.first,
+                            formattedCode: provider.formattedCode,
+                            landscape: true,
                           ),
                         ),
                     ],
