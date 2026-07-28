@@ -260,7 +260,7 @@ class _PriceDisplay extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Harga Diskon (${product.disc}%)',
+            product.discountLabel ?? 'Harga Diskon',
             style: GoogleFonts.poppins(
               fontSize: 13,
               fontWeight: FontWeight.w600,

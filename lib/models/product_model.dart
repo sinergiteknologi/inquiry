@@ -5,6 +5,7 @@ class ProductModel {
     this.packingName,
     this.sellingPrice,
     this.disc,
+    this.discountM,
   });
 
   final String? prodCode;
@@ -12,20 +13,20 @@ class ProductModel {
   final String? packingName;
   final int? sellingPrice;
   final int? disc;
+  final int? discountM;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       prodCode: json['ProdCode']?.toString(),
       prodName: json['ProdName']?.toString(),
       packingName: json['PackingName']?.toString(),
-      sellingPrice: json['SellingPrice'] is int
-          ? json['SellingPrice'] as int
-          : int.tryParse(json['SellingPrice']?.toString() ?? ''),
-      disc: _parseDisc(json['Disc']),
+      sellingPrice: _parseInt(json['SellingPrice']),
+      disc: _parseInt(json['Disc']),
+      discountM: _parseInt(json['DiscountM']),
     );
   }
 
-  static int? _parseDisc(dynamic value) {
+  static int? _parseInt(dynamic value) {
     if (value == null) return null;
     if (value is num) return value.round();
     return int.tryParse(value.toString());
@@ -33,11 +34,27 @@ class ProductModel {
 
   int get normalPrice => sellingPrice ?? 0;
 
-  bool get hasDiscount => disc != null && disc! > 0;
+  bool get usesPercentageDiscount => disc != null && disc! > 0;
+
+  bool get usesFixedDiscount =>
+      !usesPercentageDiscount && discountM != null && discountM! > 0;
+
+  bool get hasDiscount => usesPercentageDiscount || usesFixedDiscount;
 
   int get discountedPrice {
-    if (!hasDiscount) return normalPrice;
-    return (normalPrice * (100 - disc!) / 100).round();
+    if (usesPercentageDiscount) {
+      return (normalPrice * (100 - disc!) / 100).round();
+    }
+    if (usesFixedDiscount) {
+      return discountM!;
+    }
+    return normalPrice;
+  }
+
+  String? get discountLabel {
+    if (usesPercentageDiscount) return 'Harga Diskon ($disc%)';
+    if (usesFixedDiscount) return 'Harga Diskon';
+    return null;
   }
 
   String formattedCode({int maxLength = 14}) {
