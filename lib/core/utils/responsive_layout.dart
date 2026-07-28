@@ -10,8 +10,8 @@ abstract final class ResponsiveLayout {
       sizeOf(context).shortestSide >= 600;
 
   static bool isLandscapeTablet(BuildContext context) {
+    if (!isTablet(context)) return false;
     final size = sizeOf(context);
-    if (size.shortestSide < 600) return false;
     return size.width > size.height;
   }
 
