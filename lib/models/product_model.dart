@@ -46,7 +46,7 @@ class ProductModel {
       return (normalPrice * (100 - disc!) / 100).round();
     }
     if (usesFixedDiscount) {
-      return discountM!;
+      return normalPrice - discountM!;
     }
     return normalPrice;
   }
