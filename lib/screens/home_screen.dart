@@ -40,25 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   _HomeHeader(compact: isLandscapeTablet),
+                  ScanInputField(
+                    controller: provider.scanController,
+                    focusNode: provider.focusNode,
+                    onChanged: provider.onScanChanged,
+                    isLoading: provider.isFetching,
+                    overlapHeader: false,
+                  ),
                   Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.fromLTRB(
-                        isLandscapeTablet ? 24 : 12,
-                        0,
-                        isLandscapeTablet ? 24 : 12,
-                        isLandscapeTablet ? 20 : 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.surfaceBg,
-                        borderRadius: BorderRadius.circular(
-                          isLandscapeTablet ? 32 : 28,
-                        ),
-                      ),
-                      child: isLandscapeTablet
-                          ? _LandscapeBody(provider: provider)
-                          : _PortraitBody(provider: provider),
-                    ),
+                    child: isLandscapeTablet
+                        ? _LandscapeBody(provider: provider)
+                        : _PortraitBody(provider: provider),
                   ),
                 ],
               ),
@@ -82,14 +74,7 @@ class _PortraitBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ScanInputField(
-            controller: provider.scanController,
-            focusNode: provider.focusNode,
-            onChanged: provider.onScanChanged,
-            isLoading: provider.isFetching,
-            overlapHeader: false,
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           if (provider.hasMessages)
             StatusMessageCard(
               line1: provider.messageLine1,
@@ -121,21 +106,15 @@ class _LandscapeBody extends StatelessWidget {
     final showPlaceholder = !hasProduct && !hasMessage;
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveLayout.horizontalPadding(context),
-        vertical: 20,
+      padding: EdgeInsets.fromLTRB(
+        ResponsiveLayout.horizontalPadding(context),
+        8,
+        ResponsiveLayout.horizontalPadding(context),
+        20,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ScanInputField(
-            controller: provider.scanController,
-            focusNode: provider.focusNode,
-            onChanged: provider.onScanChanged,
-            isLoading: provider.isFetching,
-            overlapHeader: false,
-          ),
-          const SizedBox(height: 20),
           Expanded(
             child: showPlaceholder
                 ? _ScanPlaceholder()
@@ -229,9 +208,9 @@ class _HomeHeader extends StatelessWidget {
       color: AppColors.white,
       padding: EdgeInsets.fromLTRB(
         compact ? 24 : 20,
-        compact ? 10 : 12,
+        compact ? 8 : 8,
         compact ? 24 : 20,
-        compact ? 10 : 12,
+        compact ? 4 : 4,
       ),
       child: Align(
         alignment: compact ? Alignment.centerLeft : Alignment.centerRight,

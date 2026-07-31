@@ -77,8 +77,8 @@ class _AppEntryPointState extends State<AppEntryPoint> {
           return const HomeScreen();
         }
 
-        return const LoginScreen();
-        // return const HomeScreen();
+        // return const LoginScreen();
+        return const HomeScreen();
       },
     );
   }

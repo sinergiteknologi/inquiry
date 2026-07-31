@@ -25,7 +25,7 @@ class ScanInputField extends StatelessWidget {
     final isLandscapeTablet = ResponsiveLayout.isLandscapeTablet(context);
     final horizontal = ResponsiveLayout.horizontalPadding(context);
     final verticalOffset = overlapHeader && !isLandscapeTablet ? -24.0 : 0.0;
-    final topMargin = overlapHeader && !isLandscapeTablet ? 0.0 : 16.0;
+    final topMargin = overlapHeader && !isLandscapeTablet ? 0.0 : 4.0;
 
     return Container(
       margin: EdgeInsets.fromLTRB(horizontal, topMargin, horizontal, 0),
