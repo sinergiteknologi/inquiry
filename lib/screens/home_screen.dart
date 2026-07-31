@@ -34,42 +34,33 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Consumer<HomeProvider>(
         builder: (context, provider, _) {
           return Scaffold(
-            backgroundColor: AppColors.surfaceBg,
-            body: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.greenPrimary, AppColors.greenAccent],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: SafeArea(
-                bottom: false,
-                child: Column(
-                  children: [
-                    _HomeHeader(compact: isLandscapeTablet),
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.fromLTRB(
-                          isLandscapeTablet ? 24 : 12,
-                          0,
-                          isLandscapeTablet ? 24 : 12,
-                          isLandscapeTablet ? 20 : 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.surfaceBg,
-                          borderRadius: BorderRadius.circular(
-                            isLandscapeTablet ? 32 : 28,
-                          ),
-                        ),
-                        child: isLandscapeTablet
-                            ? _LandscapeBody(provider: provider)
-                            : _PortraitBody(provider: provider),
+            backgroundColor: AppColors.white,
+            body: SafeArea(
+              bottom: false,
+              child: Column(
+                children: [
+                  _HomeHeader(compact: isLandscapeTablet),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.fromLTRB(
+                        isLandscapeTablet ? 24 : 12,
+                        0,
+                        isLandscapeTablet ? 24 : 12,
+                        isLandscapeTablet ? 20 : 12,
                       ),
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceBg,
+                        borderRadius: BorderRadius.circular(
+                          isLandscapeTablet ? 32 : 28,
+                        ),
+                      ),
+                      child: isLandscapeTablet
+                          ? _LandscapeBody(provider: provider)
+                          : _PortraitBody(provider: provider),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
@@ -96,6 +87,7 @@ class _PortraitBody extends StatelessWidget {
             focusNode: provider.focusNode,
             onChanged: provider.onScanChanged,
             isLoading: provider.isFetching,
+            overlapHeader: false,
           ),
           const SizedBox(height: 8),
           if (provider.hasMessages)
@@ -232,102 +224,18 @@ class _HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (compact) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(24, 8, 24, 10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.greenDark,
-              AppColors.greenPrimary,
-              AppColors.greenAccent,
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-        ),
-        child: Row(
-          children: [
-            _LogoBadge(height: 36),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Inquiry Harga',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    'Scan barcode untuk melihat informasi produk',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white.withValues(alpha: 0.88),
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Icon(
-              Icons.tablet_mac_rounded,
-              color: Colors.white.withValues(alpha: 0.7),
-              size: 22,
-            ),
-          ],
-        ),
-      );
-    }
-
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.greenDark,
-            AppColors.greenPrimary,
-            AppColors.greenAccent,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
+      color: AppColors.white,
+      padding: EdgeInsets.fromLTRB(
+        compact ? 24 : 20,
+        compact ? 10 : 12,
+        compact ? 24 : 20,
+        compact ? 10 : 12,
       ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 14),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: _LogoBadge(height: 38),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Inquiry Harga',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.5,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Scan barcode untuk melihat informasi produk',
-              style: GoogleFonts.poppins(
-                color: Colors.white.withValues(alpha: 0.88),
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
+      child: Align(
+        alignment: compact ? Alignment.centerLeft : Alignment.centerRight,
+        child: _LogoBadge(height: compact ? 36 : 38),
       ),
     );
   }
