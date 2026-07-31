@@ -77,7 +77,7 @@ class ProductResultCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const _Badge(label: 'Informasi Produk'),
+                     
                     const SizedBox(height: 20),
                     Text(
                       product.prodName ?? '-',
@@ -170,7 +170,7 @@ class ProductResultCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const _Badge(label: 'Informasi Produk'),
+           
             const SizedBox(height: 20),
             Text(
               product.prodName ?? '-',
