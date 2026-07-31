@@ -28,27 +28,27 @@ class ProductResultCard extends StatelessWidget {
     final horizontal = ResponsiveLayout.horizontalPadding(context);
     final nameSize = ResponsiveLayout.value(
       context,
-      mobile: 22,
-      tablet: 26,
-      landscapeTablet: 32,
+      mobile: 28,
+      tablet: 34,
+      landscapeTablet: 40,
     );
     final priceSize = ResponsiveLayout.value(
       context,
-      mobile: 36,
-      tablet: 44,
-      landscapeTablet: 56,
+      mobile: 44,
+      tablet: 52,
+      landscapeTablet: 64,
     );
     final normalPriceSize = ResponsiveLayout.value(
+      context,
+      mobile: 20,
+      tablet: 22,
+      landscapeTablet: 26,
+    );
+    final unitSize = ResponsiveLayout.value(
       context,
       mobile: 18,
       tablet: 20,
       landscapeTablet: 24,
-    );
-    final unitSize = ResponsiveLayout.value(
-      context,
-      mobile: 16,
-      tablet: 18,
-      landscapeTablet: 22,
     );
 
     if (landscape) {
@@ -303,9 +303,9 @@ class _PriceDisplay extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: normalPriceSize,
               fontWeight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppColors.red,
               decoration: TextDecoration.lineThrough,
-              decorationColor: AppColors.grey,
+              decorationColor: AppColors.red,
             ),
           ),
         ],

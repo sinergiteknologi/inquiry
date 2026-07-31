@@ -235,7 +235,7 @@ class _HomeHeader extends StatelessWidget {
     if (compact) {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(32, 12, 32, 16),
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 10),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -249,8 +249,8 @@ class _HomeHeader extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _LogoBadge(height: 44),
-            const SizedBox(width: 20),
+            _LogoBadge(height: 36),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,7 +259,7 @@ class _HomeHeader extends StatelessWidget {
                     'Inquiry Harga',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -267,7 +267,7 @@ class _HomeHeader extends StatelessWidget {
                     'Scan barcode untuk melihat informasi produk',
                     style: GoogleFonts.poppins(
                       color: Colors.white.withValues(alpha: 0.88),
-                      fontSize: 13,
+                      fontSize: 11,
                     ),
                   ),
                 ],
@@ -276,7 +276,7 @@ class _HomeHeader extends StatelessWidget {
             Icon(
               Icons.tablet_mac_rounded,
               color: Colors.white.withValues(alpha: 0.7),
-              size: 28,
+              size: 22,
             ),
           ],
         ),
@@ -296,34 +296,34 @@ class _HomeHeader extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(32),
-          bottomRight: Radius.circular(32),
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 14),
         child: Column(
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: _LogoBadge(height: 52),
+              child: _LogoBadge(height: 38),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
             Text(
               'Inquiry Harga',
               style: GoogleFonts.poppins(
                 color: Colors.white,
-                fontSize: 26,
+                fontSize: 20,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.5,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 4),
             Text(
               'Scan barcode untuk melihat informasi produk',
               style: GoogleFonts.poppins(
                 color: Colors.white.withValues(alpha: 0.88),
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
           ],
