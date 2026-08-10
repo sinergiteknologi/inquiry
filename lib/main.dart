@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'core/theme/app_theme.dart';
+import 'core/widgets/keep_screen_on.dart';
 import 'providers/app_provider.dart';
 import 'providers/connection_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/login_provider.dart';
 import 'screens/home_screen.dart';
-import 'screens/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,11 +35,13 @@ class InquiryApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ConnectionProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
-      child: MaterialApp(
-        title: 'Inquiry Harga',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
-        home: const AppEntryPoint(),
+      child: KeepScreenOn(
+        child: MaterialApp(
+          title: 'Inquiry Harga',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          home: const AppEntryPoint(),
+        ),
       ),
     );
   }
