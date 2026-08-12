@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     controller: provider.scanController,
                     focusNode: provider.focusNode,
                     onChanged: provider.onScanChanged,
+                    onSubmitted: provider.onScanSubmitted,
                     isLoading: provider.isFetching,
                     overlapHeader: false,
                   ),

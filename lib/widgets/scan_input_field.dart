@@ -10,6 +10,7 @@ class ScanInputField extends StatelessWidget {
     required this.controller,
     required this.focusNode,
     required this.onChanged,
+    this.onSubmitted,
     this.isLoading = false,
     this.overlapHeader = true,
   });
@@ -17,8 +18,13 @@ class ScanInputField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onSubmitted;
   final bool isLoading;
   final bool overlapHeader;
+
+  void _submit() {
+    onSubmitted?.call(controller.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +81,12 @@ class ScanInputField extends StatelessWidget {
               controller: controller,
               focusNode: focusNode,
               autofocus: true,
+              enabled: !isLoading,
               onChanged: onChanged,
+              onSubmitted: (_) => _submit(),
+              onEditingComplete: _submit,
+              textInputAction: TextInputAction.search,
+              keyboardType: TextInputType.text,
               style: GoogleFonts.poppins(
                 fontSize: isLandscapeTablet ? 18 : 15,
                 fontWeight: FontWeight.w500,
@@ -96,6 +107,16 @@ class ScanInputField extends StatelessWidget {
               ),
             ),
           ),
+          if (!isLoading)
+            IconButton(
+              onPressed: _submit,
+              tooltip: 'Cari',
+              icon: Icon(
+                Icons.search_rounded,
+                color: AppColors.greenPrimary,
+                size: isLandscapeTablet ? 28 : 24,
+              ),
+            ),
         ],
       ),
     );

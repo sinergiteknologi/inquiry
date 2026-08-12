@@ -34,6 +34,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> initialize() async {
     _serverUrl = await StorageService.getServerUrl();
+    scanController.addListener(_onControllerChanged);
     focusNode.requestFocus();
 
     _refreshTimer = Timer.periodic(
@@ -44,6 +45,10 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _onControllerChanged() {
+    onScanChanged(scanController.text);
+  }
+
   void onScanChanged(String value) {
     _debounceTimer?.cancel();
     if (value.trim().isEmpty) return;
@@ -51,6 +56,13 @@ class HomeProvider extends ChangeNotifier {
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
       fetchProduct(value.trim());
     });
+  }
+
+  void onScanSubmitted(String value) {
+    _debounceTimer?.cancel();
+    final barcode = value.trim();
+    if (barcode.isEmpty) return;
+    fetchProduct(barcode);
   }
 
   Future<void> fetchProduct(String barcode) async {
@@ -127,6 +139,7 @@ class HomeProvider extends ChangeNotifier {
     _debounceTimer?.cancel();
     _messageTimer?.cancel();
     _refreshTimer?.cancel();
+    scanController.removeListener(_onControllerChanged);
     scanController.dispose();
     focusNode.dispose();
     super.dispose();
