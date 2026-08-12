@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inquiry/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -79,8 +80,8 @@ class _AppEntryPointState extends State<AppEntryPoint> {
           return const HomeScreen();
         }
 
-        // return const LoginScreen();
-        return const HomeScreen();
+        return const LoginScreen();
+        // return const HomeScreen();
       },
     );
   }
