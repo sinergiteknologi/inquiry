@@ -20,6 +20,7 @@ class HomeProvider extends ChangeNotifier {
   Timer? _debounceTimer;
   Timer? _messageTimer;
   Timer? _refreshTimer;
+  Timer? _focusTimer;
 
   List<ProductModel> get products => _products;
   String? get formattedCode => _formattedCode;
@@ -35,7 +36,13 @@ class HomeProvider extends ChangeNotifier {
   Future<void> initialize() async {
     _serverUrl = await StorageService.getServerUrl();
     scanController.addListener(_onControllerChanged);
-    focusNode.requestFocus();
+    focusNode.addListener(_onFocusChanged);
+    _ensureScanFocus();
+
+    _focusTimer = Timer.periodic(
+      const Duration(milliseconds: 800),
+      (_) => _ensureScanFocus(),
+    );
 
     _refreshTimer = Timer.periodic(
       const Duration(minutes: 20),
@@ -44,6 +51,20 @@ class HomeProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void _onFocusChanged() {
+    if (!focusNode.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 150), _ensureScanFocus);
+    }
+  }
+
+  void _ensureScanFocus() {
+    if (!focusNode.hasFocus && focusNode.canRequestFocus) {
+      focusNode.requestFocus();
+    }
+  }
+
+  void ensureScanFocus() => _ensureScanFocus();
 
   void _onControllerChanged() {
     onScanChanged(scanController.text);
@@ -88,14 +109,17 @@ class HomeProvider extends ChangeNotifier {
       }
 
       scanController.clear();
-      focusNode.requestFocus();
+      _ensureScanFocus();
     } on ApiException catch (e) {
       _showServerError(e.message);
+      _ensureScanFocus();
     } catch (_) {
       _showServerError('Terjadi kesalahan koneksi');
+      _ensureScanFocus();
     } finally {
       _isFetching = false;
       notifyListeners();
+      _ensureScanFocus();
     }
   }
 
@@ -110,6 +134,7 @@ class HomeProvider extends ChangeNotifier {
     _messageTimer = Timer(const Duration(seconds: 3), () {
       _clearMessages();
       notifyListeners();
+      _ensureScanFocus();
     });
   }
 
@@ -139,6 +164,8 @@ class HomeProvider extends ChangeNotifier {
     _debounceTimer?.cancel();
     _messageTimer?.cancel();
     _refreshTimer?.cancel();
+    _focusTimer?.cancel();
+    focusNode.removeListener(_onFocusChanged);
     scanController.removeListener(_onControllerChanged);
     scanController.dispose();
     focusNode.dispose();
